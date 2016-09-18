@@ -1,7 +1,7 @@
 Show Keyboard Layout
 ====================
 
-This simplish Haskell command line script will let you know what layout your keyboard is set to.
+This simplish Linux X window system Haskell command line script will let you know what layout your keyboard is set to.
 It uses xset & setxkbmap to gather the facts, and some glue to isolate the layout information from
 their rather wordy output.
 
