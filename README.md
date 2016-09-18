@@ -17,4 +17,4 @@ You can compile the script with a simple `ghc ...` if you wish it be slimmer and
 runtime.
 
 Put this: `${execp ~/bin/ShowKeyboardLayout.hs}` -- in your `.conkyrc` to continuously observe
-your keyboard layout.
+your keyboard layout (assuming the script is indeed to be found in `~/bin`).
