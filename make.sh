@@ -1,1 +1,1 @@
-ghc -lX11 ShowKeyboardLayout.hs
+hsc2hs ShowKeyboardLayout.hsc && ghc -lX11 -lxkbfile ShowKeyboardLayout.hs
