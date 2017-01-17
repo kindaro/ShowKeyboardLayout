@@ -14,7 +14,7 @@ import Foreign.Ptr
 import Foreign.Storable
 import System.IO.Unsafe
 
-#include "header.h"
+#include <X11/extensions/XKBrules.h>
 
 type Display = Int -- cz idk
 
@@ -30,31 +30,31 @@ data XkbRF_VarDefs = XkbRF_VarDefs
                         }
 
 instance Storable XkbRF_VarDefs where
-    sizeOf _ = (#size c_xkbrf_vardefs)
+    sizeOf _ = (#size XkbRF_VarDefsRec)
     alignment _ = alignment (undefined :: CDouble)
     peek ptr = do
-        model_peek        <- ( #peek c_xkbrf_vardefs, model        ) ptr
-        layout_peek       <- ( #peek c_xkbrf_vardefs, layout       ) ptr
-        variant_peek      <- ( #peek c_xkbrf_vardefs, variant      ) ptr
-        options_peek      <- ( #peek c_xkbrf_vardefs, options      ) ptr
-        sz_extra_peek     <- ( #peek c_xkbrf_vardefs, sz_extra     ) ptr
-        num_extra_peek    <- ( #peek c_xkbrf_vardefs, num_extra    ) ptr
-        extra_names_peek  <- ( #peek c_xkbrf_vardefs, extra_names  ) ptr
-        extra_values_peek  <- ( #peek c_xkbrf_vardefs, extra_values  ) ptr
+        model_peek        <- ( #peek XkbRF_VarDefsRec, model        ) ptr
+        layout_peek       <- ( #peek XkbRF_VarDefsRec, layout       ) ptr
+        variant_peek      <- ( #peek XkbRF_VarDefsRec, variant      ) ptr
+        options_peek      <- ( #peek XkbRF_VarDefsRec, options      ) ptr
+        sz_extra_peek     <- ( #peek XkbRF_VarDefsRec, sz_extra     ) ptr
+        num_extra_peek    <- ( #peek XkbRF_VarDefsRec, num_extra    ) ptr
+        extra_names_peek  <- ( #peek XkbRF_VarDefsRec, extra_names  ) ptr
+        extra_values_peek <- ( #peek XkbRF_VarDefsRec, extra_values ) ptr
         return (XkbRF_VarDefs
                 -- I could hugely improve here if I can use labels without "_peek" -- TODO
             model_peek layout_peek variant_peek
             options_peek sz_extra_peek num_extra_peek
             extra_names_peek extra_values_peek)
     poke ptr x = do
-        ( #poke c_xkbrf_vardefs, model        ) ptr (model x)
-        ( #poke c_xkbrf_vardefs, layout       ) ptr (layout x)
-        ( #poke c_xkbrf_vardefs, variant      ) ptr (variant x)
-        ( #poke c_xkbrf_vardefs, options      ) ptr (options x)
-        ( #poke c_xkbrf_vardefs, sz_extra     ) ptr (sz_extra x)
-        ( #poke c_xkbrf_vardefs, num_extra    ) ptr (num_extra x)
-        ( #poke c_xkbrf_vardefs, extra_names  ) ptr (extra_names x)
-        ( #poke c_xkbrf_vardefs, extra_values ) ptr (extra_values x)
+        ( #poke XkbRF_VarDefsRec, model        ) ptr (model x)
+        ( #poke XkbRF_VarDefsRec, layout       ) ptr (layout x)
+        ( #poke XkbRF_VarDefsRec, variant      ) ptr (variant x)
+        ( #poke XkbRF_VarDefsRec, options      ) ptr (options x)
+        ( #poke XkbRF_VarDefsRec, sz_extra     ) ptr (sz_extra x)
+        ( #poke XkbRF_VarDefsRec, num_extra    ) ptr (num_extra x)
+        ( #poke XkbRF_VarDefsRec, extra_names  ) ptr (extra_names x)
+        ( #poke XkbRF_VarDefsRec, extra_values ) ptr (extra_values x)
 
 main = putStrLn . show $ openDisplay
 
