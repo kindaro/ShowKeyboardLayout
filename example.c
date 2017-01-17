@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <X11/XKBlib.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <X11/Xutil.h>
+
 
 void init_x();
 
@@ -25,7 +28,11 @@ void init_x() {
 	/* use the information from the environment variable DISPLAY 
 	   to create the X connection:
 	*/	
-	dis=XOpenDisplay(":0");
+	dis=XOpenDisplay(NULL);
+    if (dis == NULL) {
+        fprintf(stderr, "Cannot open display\n");
+        exit(1);
+    }
    	screen=DefaultScreen(dis);
 	black=BlackPixel(dis,screen),	/* get color black */
 	white=WhitePixel(dis, screen);  /* get color white */
@@ -42,7 +49,7 @@ void init_x() {
 	   at the top of the window and the name of the minimized window
 	   respectively.
 	*/
-	/* XSetStandardProperties(dis,win,"My Window","HI!",None,NULL,0,NULL); */
+	XSetStandardProperties(dis,win,"My Window","HI!",None,NULL,0,NULL);
 
 	/* this routine determines which types of input are allowed in
 	   the input.  see the appropriate section for details...
@@ -57,10 +64,17 @@ void init_x() {
 	*/
 	XSetBackground(dis,gc,white);
 	XSetForeground(dis,gc,black);
+    XMapWindow(dis, win);
 
 	/* clear the window and bring it on top of the other windows */
 	XClearWindow(dis, win);
 	XMapRaised(dis, win);
-	sleep(10);
+	for(;;)
+	{
+		XEvent e;
+		XNextEvent(dis, &e);
+		if (e.type == MapNotify)
+			break;
+	}
 };
 
